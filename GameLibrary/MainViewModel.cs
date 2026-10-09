@@ -1,0 +1,25 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameLibrary;
+
+public partial class MainViewModel : ObservableObject
+{
+    [ObservableProperty]
+    public partial int Count { get; set; } = 0;
+
+    [ObservableProperty]
+    public partial string Title { get; set; } = "Game Library - 0";
+
+    [RelayCommand]
+    public void IncrementCount()
+    {
+        Count++;
+        Title = $"Game Library - {Count}";
+    }
+}
