@@ -17,4 +17,17 @@ public class Game
     public int PlayTimeMinutes { get; set; }
     public bool IsFavorite { get; set; }
 
+    public string PlayTimeDisplay
+    {
+        get
+        {
+            int hours = PlayTimeMinutes / 60;
+            int minutes = PlayTimeMinutes % 60;
+
+            string hourText = hours == 1 ? "hour" : "hours";
+            string minuteText = minutes == 1 ? "minute" : "minutes";
+
+            return $"Time played: {hours} {hourText}, {minutes} {minuteText}";
+        }
+    }
 }

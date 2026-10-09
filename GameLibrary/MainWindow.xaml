@@ -6,6 +6,7 @@
     xmlns:local="using:GameLibrary"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GameLibrary.Model"
     mc:Ignorable="d"
     Title="GameLibrary">
 
@@ -13,26 +14,18 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid DataContext="{x:Bind ViewModel}">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
-            <TextBox 
-                Text="{Binding Title}" 
-                IsReadOnly="True"  
-                FontSize="24" 
-                HorizontalAlignment="Center"
-                Padding="10"/>
-            <TextBox 
-                Text="{Binding Count}" 
-                IsReadOnly="True"  
-                FontSize="24" 
-                HorizontalAlignment="Center"
-                Padding="10"/>
-            <Button 
-                Content="Click me" 
-                Command="{x:Bind ViewModel.IncrementCountCommand}" 
-                Width="100" 
-                Height="50" 
-                HorizontalAlignment="Center"/>
-        </StackPanel>
+    <Grid>
+        <ListView ItemsSource="{x:Bind ViewModel.Games}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:Game">
+                    <StackPanel Padding="12">
+                        <TextBlock Text="{x:Bind Name}" FontSize="20" FontWeight="SemiBold" />
+                        <TextBlock Text="{x:Bind Developer}" />
+                        <TextBlock Text="{x:Bind Platform}" />
+                        <TextBlock Text="{x:Bind PlayTimeDisplay}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>
