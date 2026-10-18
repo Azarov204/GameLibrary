@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GameLibrary.Model"
+    xmlns:controls="using:GameLibrary.Controls"
     mc:Ignorable="d"
     Title="GameLibrary">
 
@@ -14,18 +15,70 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
-        <ListView ItemsSource="{x:Bind ViewModel.Games}">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:Game">
-                    <StackPanel Padding="12">
-                        <TextBlock Text="{x:Bind Name}" FontSize="20" FontWeight="SemiBold" />
-                        <TextBlock Text="{x:Bind Developer}" />
-                        <TextBlock Text="{x:Bind Platform}" />
-                        <TextBlock Text="{x:Bind PlayTimeDisplay}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+    <Grid Background="#312D44">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Left Sidebar -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" RequestedTheme="Dark">
+            <StackPanel Padding="16" Spacing="20">
+
+                <!-- Search Bar -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Search" FontSize="18" FontWeight="SemiBold" />
+                    <TextBox x:Name="SearchTextBox" PlaceholderText="Search games..."/>
+                </StackPanel>
+
+                <!-- Sort by -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Sort by" FontSize="18" FontWeight="SemiBold" />
+                    <RadioButtons x:Name="SortOptions" SelectedIndex="0">
+                        <x:String>Alphabetical</x:String>
+                        <x:String>Release Date</x:String>
+                        <x:String>Last Played</x:String>
+                        <x:String>Play Time</x:String>
+                    </RadioButtons>
+                </StackPanel>
+
+                <!-- Launcher filters -->
+                <StackPanel Spacing="8" >
+                    <TextBlock Text="Launcher" FontSize="18" FontWeight="SemiBold" />
+                    <CheckBox Content="Steam" />
+                    <CheckBox Content="Epic Games" />
+                    <CheckBox Content="GOG" />
+                    <CheckBox Content="Rockstar" />
+                    <CheckBox Content="Unknown" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Game Library Main Window -->
+        <Grid x:Name="GameArea" SizeChanged="GameArea_SizeChanged" Grid.Column="1">
+            <GridView
+                ItemsSource="{x:Bind ViewModel.Games, Mode=OneWay}"
+                SelectionMode="None"
+                Background="#423D5B"
+                Padding="20,40"
+                Margin="0">
+
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Game">
+                        <controls:GameCard
+                            GameItem="{Binding}"
+                            Margin="8"
+                            PlayRequested="GameCard_PlayRequested" 
+                            DetailsRequested="GameCard_DetailsRequested" />
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
     </Grid>
 </Window>

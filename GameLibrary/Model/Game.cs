@@ -10,6 +10,7 @@ public class Game
     public string InstallDirectory { get; set; } = string.Empty;
     public GamePlatform Platform { get; set; }
     public string Image { get; set; } = string.Empty;
+    public string ImageUri => $"ms-appx:///Assets/GameCovers/{Image}";
     public string Description { get; set; } = string.Empty;
     public string Developer { get; set; } = string.Empty;
     public DateTime ReleaseDate { get; set; }

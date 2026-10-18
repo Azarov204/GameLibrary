@@ -1,26 +1,9 @@
+using GameLibrary.Controls;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace GameLibrary
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : Window
     {
         public MainViewModel ViewModel { get; set; } = new();
@@ -31,5 +14,33 @@ namespace GameLibrary
             InitializeComponent();
         }
 
+        private void GameCard_PlayRequested(object sender, EventArgs e)
+        {
+            if (sender is GameCard card)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"Play clicked: {card.GameItem?.Name}");
+            }
+        }
+
+        private void GameCard_DetailsRequested(object sender, EventArgs e)
+        {
+            if (sender is GameCard card)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"Details clicked: {card.GameItem?.Name}");
+            }
+        }
+
+        private void GameArea_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double availableWidth = e.NewSize.Width;
+            double minimumCardWidth = 180;
+            double spacing = 16;
+
+            int columns = Math.Max(1, (int)((availableWidth + spacing) / (minimumCardWidth + spacing)));
+            double cardWidth = (availableWidth - (columns * spacing)) / columns;
+            // GameCardWidth = cardWidth;
+        }
     }
 }
