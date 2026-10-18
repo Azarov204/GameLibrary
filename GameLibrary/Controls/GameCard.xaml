@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="GameLibrary.Controls.GameCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GameLibrary.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Width="200" Height="300" >
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CardStates">
+                <VisualState x:Name="Normal">
+                    <Storyboard>
+                        <DoubleAnimation
+                            Storyboard.TargetName="DarkOverlay"
+                            Storyboard.TargetProperty="Opacity"
+                            To="0"
+                            Duration="0:0:0.2" />
+
+                        <DoubleAnimation
+                            Storyboard.TargetName="ActionPanel"
+                            Storyboard.TargetProperty="Opacity"
+                            To="0"
+                            Duration="0:0:0.2" />
+                    </Storyboard>
+                </VisualState>
+
+                <VisualState x:Name="ActionsVisible">
+                    <Storyboard>
+                        <DoubleAnimation
+                            Storyboard.TargetName="DarkOverlay"
+                            Storyboard.TargetProperty="Opacity"
+                            To="0.75"
+                            Duration="0:0:0.2" />
+
+                        <DoubleAnimation
+                            Storyboard.TargetName="ActionPanel"
+                            Storyboard.TargetProperty="Opacity"
+                            To="1"
+                            Duration="0:0:0.2" />
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <!-- Game cover art -->
+        <Button
+            x:Name="CoverButton"
+            Click="CoverButton_Click"
+            Padding="0"
+            BorderThickness="0"
+            Background="Transparent"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            
+            <Image
+                Source="{x:Bind GameItem.ImageUri, Mode=OneWay}"
+                Stretch="UniformToFill" />
+            
+        </Button>
+        
+        <!-- Dark overlay -->
+        <Border
+            x:Name="DarkOverlay"
+            Background="Black"
+            Opacity="0"
+            IsHitTestVisible="False" />
+
+        <!-- Action buttons -->
+        <StackPanel
+            x:Name="ActionPanel"
+            Opacity="0"
+            IsHitTestVisible="False"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="12" >
+
+            <Button
+                Content="Play"
+                Width="130"
+                Click="PlayButton_Click" />
+
+            <Button
+                Content="Details"
+                Width="130"
+                Click="DetailsButton_Click" />
+
+            <Button
+                Width="40"
+                Height="40"
+                Padding="0"
+                CornerRadius="20"
+                HorizontalAlignment="Center"
+                Click="CloseButton_Click" >
+                
+                <FontIcon Glyph="&#xE711;" />
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
