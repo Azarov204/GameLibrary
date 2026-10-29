@@ -47,20 +47,35 @@ public sealed partial class GameDetailsPage : Page
 
     private async Task LoadHeroImageAsync(CanvasControl sender)
     {
-        // Replace this with the actual hero image URI.
-        var imageUri = new Uri(
-            "ms-appx:///Assets/GameHeros/cs2_hero.png");
+        _heroBitmap = null;
+        _blurEffect = null;
 
-        _heroBitmap = await CanvasBitmap.LoadAsync(sender, imageUri);
-
-        _blurEffect = new GaussianBlurEffect
+        if (DataContext is not Game game ||
+            string.IsNullOrWhiteSpace(game.HeroImageUri))
         {
-            Source = _heroBitmap,
-            BlurAmount = 50f,
-            BorderMode = EffectBorderMode.Hard
-        };
+            HeroBlurCanvas.Invalidate();
+            return;
+        }
 
-        HeroBlurCanvas.Invalidate();
+        try
+        {
+            var imageUri = new Uri(game.HeroImageUri);
+
+            _heroBitmap = await CanvasBitmap.LoadAsync(sender, imageUri);
+
+            _blurEffect = new GaussianBlurEffect
+            {
+                Source = _heroBitmap,
+                BlurAmount = 50f,
+                BorderMode = EffectBorderMode.Hard
+            };
+        }
+        catch (Exception ex)
+        {
+            // Image is missing, invalid, or could not be loaded.
+            _heroBitmap = null;
+            _blurEffect = null;
+        }
     }
 
     private void HeroBlurCanvas_Draw(CanvasControl sender, CanvasDrawEventArgs args)
