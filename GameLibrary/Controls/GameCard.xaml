@@ -51,6 +51,7 @@
             Click="CoverButton_Click"
             Padding="0"
             BorderThickness="0"
+            CornerRadius="12"
             Background="Transparent"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch">
@@ -66,7 +67,8 @@
             x:Name="DarkOverlay"
             Background="Black"
             Opacity="0"
-            IsHitTestVisible="False" />
+            IsHitTestVisible="False"
+            CornerRadius="12"/>
 
         <!-- Action buttons -->
         <StackPanel
