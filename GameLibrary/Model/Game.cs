@@ -11,6 +11,8 @@ public class Game
     public GamePlatform Platform { get; set; }
     public string Image { get; set; } = string.Empty;
     public string ImageUri => $"ms-appx:///Assets/GameCovers/{Image}";
+    public string Hero { get; set; } = string.Empty;
+    public string HeroImageUri => $"ms-appx:///Assets/GameHeros/{Hero}";
     public string Description { get; set; } = string.Empty;
     public string Developer { get; set; } = string.Empty;
     public DateTime ReleaseDate { get; set; }
