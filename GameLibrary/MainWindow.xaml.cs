@@ -1,46 +1,52 @@
-using GameLibrary.Controls;
+using GameLibrary.Pages;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
+using Windows.UI;
 
-namespace GameLibrary
+namespace GameLibrary;
+
+public sealed partial class MainWindow : Window
 {
-    public sealed partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainViewModel ViewModel { get; set; } = new();
-        
+        InitializeComponent();
+        MainFrame.Navigate(typeof(LibraryPage));
 
-        public MainWindow()
+        var appWindow = this.AppWindow;
+
+        if (appWindow.Presenter is OverlappedPresenter presenter)
         {
-            InitializeComponent();
+            presenter.PreferredMinimumWidth = 1000;
+            presenter.PreferredMinimumHeight = 600;
         }
 
-        private void GameCard_PlayRequested(object sender, EventArgs e)
-        {
-            if (sender is GameCard card)
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    $"Play clicked: {card.GameItem?.Name}");
-            }
-        }
+        var titleBar = AppWindow.TitleBar;
+        var backgroundColor = HexToColor("#312D44");
+        var backgroundColorHover = HexToColor("#6E6699");
 
-        private void GameCard_DetailsRequested(object sender, EventArgs e)
-        {
-            if (sender is GameCard card)
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    $"Details clicked: {card.GameItem?.Name}");
-            }
-        }
+        titleBar.BackgroundColor = backgroundColor;
+        titleBar.ForegroundColor = Colors.White;
 
-        private void GameArea_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            double availableWidth = e.NewSize.Width;
-            double minimumCardWidth = 180;
-            double spacing = 16;
+        titleBar.ButtonBackgroundColor = backgroundColor;
+        titleBar.ButtonForegroundColor = Colors.White;
 
-            int columns = Math.Max(1, (int)((availableWidth + spacing) / (minimumCardWidth + spacing)));
-            double cardWidth = (availableWidth - (columns * spacing)) / columns;
-            // GameCardWidth = cardWidth;
-        }
+        titleBar.ButtonHoverBackgroundColor = backgroundColorHover;
+        titleBar.ButtonHoverForegroundColor = Colors.White;
+
+        titleBar.ButtonPressedBackgroundColor = backgroundColorHover;
+        titleBar.ButtonPressedForegroundColor = Colors.White;
+    }
+
+    private static Color HexToColor(string hex)
+    {
+        hex = hex.TrimStart('#');
+
+        byte r = Convert.ToByte(hex.Substring(0, 2), 16);
+        byte g = Convert.ToByte(hex.Substring(2, 2), 16);
+        byte b = Convert.ToByte(hex.Substring(4, 2), 16);
+
+        return Color.FromArgb(255, r, g, b);
     }
 }
