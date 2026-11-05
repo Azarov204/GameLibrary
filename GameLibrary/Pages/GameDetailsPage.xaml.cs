@@ -1,5 +1,6 @@
 using GameLibrary.Model;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -42,10 +43,10 @@ public sealed partial class GameDetailsPage : Page
 
     private void HeroBlurCanvas_CreateResources(CanvasControl sender, CanvasCreateResourcesEventArgs args)
     {
-        args.TrackAsyncAction(LoadHeroImageAsync(sender).AsAsyncAction());
+        args.TrackAsyncAction(LoadBlurHeroImageAsync(sender).AsAsyncAction());
     }
 
-    private async Task LoadHeroImageAsync(CanvasControl sender)
+    private async Task LoadBlurHeroImageAsync(CanvasControl sender)
     {
         _heroBitmap = null;
         _blurEffect = null;
@@ -66,7 +67,7 @@ public sealed partial class GameDetailsPage : Page
             _blurEffect = new GaussianBlurEffect
             {
                 Source = _heroBitmap,
-                BlurAmount = 50f,
+                BlurAmount = 40f,
                 BorderMode = EffectBorderMode.Hard
             };
         }
@@ -80,7 +81,7 @@ public sealed partial class GameDetailsPage : Page
 
     private void HeroBlurCanvas_Draw(CanvasControl sender, CanvasDrawEventArgs args)
     {
-        if (_blurEffect == null || _heroBitmap == null)
+        if (_heroBitmap == null)
             return;
 
         float width = (float)sender.ActualWidth;
@@ -89,16 +90,97 @@ public sealed partial class GameDetailsPage : Page
         if (width <= 0 || height <= 0)
             return;
 
-        var scaleEffect = new ScaleEffect
+        if (_blurEffect != null)
         {
-            Source = _blurEffect,
-            Scale = new System.Numerics.Vector2(
-                width / (float)_heroBitmap.Size.Width,
-                height / (float)_heroBitmap.Size.Height)
+            var scaleEffect = new ScaleEffect
+            {
+                Source = _blurEffect,
+                Scale = new System.Numerics.Vector2(
+                    width / (float)_heroBitmap.Size.Width,
+                    height / (float)_heroBitmap.Size.Height)
+            };
+
+            args.DrawingSession.DrawImage(
+                scaleEffect,
+                new System.Numerics.Vector2(0, 0));
+        }
+
+        args.DrawingSession.FillRectangle(
+            new Windows.Foundation.Rect(0, 0, width, height),
+            Windows.UI.Color.FromArgb(0x44, 0, 0, 0));
+
+        HeroImage_Draw(sender, args);
+    }
+
+    private void HeroImage_Draw(CanvasControl sender, CanvasDrawEventArgs args)
+    {
+        if (_heroBitmap == null)
+            return;
+
+        float width = (float)sender.ActualWidth;
+        float height = (float)sender.ActualHeight;
+
+        if (width <= 0 || height <= 0)
+            return;
+
+        float scale = Math.Min(
+            width / (float)_heroBitmap.Size.Width,
+            height / (float)_heroBitmap.Size.Height);
+        float imageWidth = (float)_heroBitmap.Size.Width * scale;
+        float imageHeight = (float)_heroBitmap.Size.Height * scale;
+        float x = (width - imageWidth) / 2;
+        float y = (height - imageHeight) / 2;
+
+        float bitmapWidth = (float)_heroBitmap.Size.Width;
+        float bitmapHeight = (float)_heroBitmap.Size.Height;
+
+        using var mask = new CanvasCommandList(sender);
+        using (var maskDrawingSession = mask.CreateDrawingSession())
+        using (var gradientBrush = new CanvasLinearGradientBrush(sender, new[]
+        {
+            new CanvasGradientStop
+            {
+                Position = 0f,
+                Color = Windows.UI.Color.FromArgb(0, 255, 255, 255)
+            },
+            new CanvasGradientStop
+            {
+                Position = 0.15f,
+                Color = Windows.UI.Color.FromArgb(255, 255, 255, 255)
+            },
+            new CanvasGradientStop
+            {
+                Position = 0.85f,
+                Color = Windows.UI.Color.FromArgb(255, 255, 255, 255)
+            },
+            new CanvasGradientStop
+            {
+                Position = 1f,
+                Color = Windows.UI.Color.FromArgb(0, 255, 255, 255)
+            }
+        }))
+        {
+            gradientBrush.StartPoint = new System.Numerics.Vector2(0, 0);
+            gradientBrush.EndPoint = new System.Numerics.Vector2(bitmapWidth, 0);
+            maskDrawingSession.FillRectangle(
+                new Windows.Foundation.Rect(0, 0, bitmapWidth, bitmapHeight),
+                gradientBrush);
+        }
+
+        var fadedHeroImage = new AlphaMaskEffect
+        {
+            Source = _heroBitmap,
+            AlphaMask = mask
+        };
+
+        var sharpImageScaleEffect = new ScaleEffect
+        {
+            Source = fadedHeroImage,
+            Scale = new System.Numerics.Vector2(scale, scale)
         };
 
         args.DrawingSession.DrawImage(
-            scaleEffect,
-            new System.Numerics.Vector2(0, 0));
+            sharpImageScaleEffect,
+            new System.Numerics.Vector2(x, y));
     }
 }
