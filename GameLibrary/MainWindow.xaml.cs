@@ -1,35 +1,52 @@
+using GameLibrary.Pages;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.UI;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace GameLibrary;
 
-namespace GameLibrary
+public sealed partial class MainWindow : Window
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainViewModel ViewModel { get; set; } = new();
-        
+        InitializeComponent();
+        MainFrame.Navigate(typeof(LibraryPage));
 
-        public MainWindow()
+        var appWindow = this.AppWindow;
+
+        if (appWindow.Presenter is OverlappedPresenter presenter)
         {
-            InitializeComponent();
+            presenter.PreferredMinimumWidth = 1000;
+            presenter.PreferredMinimumHeight = 600;
         }
 
+        var titleBar = AppWindow.TitleBar;
+        var backgroundColor = HexToColor("#312D44");
+        var backgroundColorHover = HexToColor("#6E6699");
+
+        titleBar.BackgroundColor = backgroundColor;
+        titleBar.ForegroundColor = Colors.White;
+
+        titleBar.ButtonBackgroundColor = backgroundColor;
+        titleBar.ButtonForegroundColor = Colors.White;
+
+        titleBar.ButtonHoverBackgroundColor = backgroundColorHover;
+        titleBar.ButtonHoverForegroundColor = Colors.White;
+
+        titleBar.ButtonPressedBackgroundColor = backgroundColorHover;
+        titleBar.ButtonPressedForegroundColor = Colors.White;
+    }
+
+    private static Color HexToColor(string hex)
+    {
+        hex = hex.TrimStart('#');
+
+        byte r = Convert.ToByte(hex.Substring(0, 2), 16);
+        byte g = Convert.ToByte(hex.Substring(2, 2), 16);
+        byte b = Convert.ToByte(hex.Substring(4, 2), 16);
+
+        return Color.FromArgb(255, r, g, b);
     }
 }

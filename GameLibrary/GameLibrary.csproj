@@ -14,6 +14,19 @@
     <Nullable>enable</Nullable>
 	<LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\GameCovers\ac1.png" />
+    <None Remove="Assets\GameCovers\ac3.png" />
+    <None Remove="Assets\GameCovers\cs2.png" />
+    <None Remove="Assets\GameCovers\cyberpunk.png" />
+    <None Remove="Assets\GameCovers\doom.png" />
+    <None Remove="Assets\GameCovers\lastofus.png" />
+    <None Remove="Assets\GameCovers\reddead2.png" />
+    <None Remove="Assets\GameHeros\cs2_hero.png" />
+    <None Remove="Assets\GameHeros\reddead2_hero.png" />
+    <None Remove="Controls\GameCard.xaml" />
+    <None Remove="Pages\LibraryPage.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -39,11 +52,22 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2705" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\LibraryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\GameCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--
