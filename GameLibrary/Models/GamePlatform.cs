@@ -1,4 +1,4 @@
-﻿namespace GameLibrary.Model;
+﻿namespace GameLibrary.Models;
 
 public enum GamePlatform
 {

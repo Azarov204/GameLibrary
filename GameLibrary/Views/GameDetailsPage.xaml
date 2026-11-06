@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="GameLibrary.Pages.GameDetailsPage"
+    x:Class="GameLibrary.Views.GameDetailsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GameLibrary.Pages"
+    xmlns:local="using:GameLibrary.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
@@ -52,23 +52,23 @@
                 <StackPanel Spacing="16">
 
                     <TextBlock
-                        Text="{Binding Name}"
+                        Text="{Binding Game.Name}"
                         FontSize="32"
                         FontWeight="SemiBold"
                         TextWrapping="Wrap" />
 
                     <TextBlock
-                        Text="{Binding Description}"
+                        Text="{Binding Game.Description}"
                         TextWrapping="Wrap"
                         FontSize="16" />
 
-                    <TextBlock Text="{Binding Developer}" />
-                    <TextBlock Text="{Binding Platform}" />
-                    <TextBlock Text="{Binding ReleaseDate}" />
-                    <TextBlock Text="{Binding PlayTimeMinutes}" />
+                    <TextBlock Text="{Binding Game.Developer}" />
+                    <TextBlock Text="{Binding Game.Platform}" />
+                    <TextBlock Text="{Binding Game.ReleaseDate}" />
+                    <TextBlock Text="{Binding PlayTimeDisplay}" />
 
                     <TextBlock
-                        Text="{Binding InstalledDirectory}"
+                        Text="{Binding Game.InstallDirectory}"
                         TextWrapping="Wrap" />
 
                 </StackPanel>

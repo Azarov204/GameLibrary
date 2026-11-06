@@ -1,15 +1,14 @@
-﻿using GameLibrary.Model;
+﻿using GameLibrary.Models;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace GameLibrary.Services;
 
-public static class FakeGameService
+public class FakeGameService : IGameService
 {
-    public static ObservableCollection<Game> GetGames()
+    public IEnumerable<Game> GetGames()
     {
-
-        return new ObservableCollection<Game>
+        return new List<Game>
         {
             new Game
             {
@@ -40,7 +39,7 @@ public static class FakeGameService
                 Developer = "Valve",
                 ReleaseDate = new DateTime(2023, 9, 27),
                 LastPlayed = DateTime.Now.AddHours(-5),
-                PlayTimeMinutes = 5830,
+                PlayTimeMinutes = 40245,
                 IsFavorite = true
             },
             new Game
@@ -56,7 +55,7 @@ public static class FakeGameService
                 Developer = "id Software",
                 ReleaseDate = new DateTime(2016, 5, 13),
                 LastPlayed = DateTime.Now.AddDays(-14),
-                PlayTimeMinutes = 720,
+                PlayTimeMinutes = 39,
                 IsFavorite = false
             },
             new Game
@@ -72,7 +71,7 @@ public static class FakeGameService
                 Developer = "CD Projekt Red",
                 ReleaseDate = new DateTime(2020, 12, 10),
                 LastPlayed = DateTime.Now.AddDays(-1),
-                PlayTimeMinutes = 2460,
+                PlayTimeMinutes = 103,
                 IsFavorite = true
             },
             new Game
