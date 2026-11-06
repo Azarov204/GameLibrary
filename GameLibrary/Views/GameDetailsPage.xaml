@@ -52,23 +52,23 @@
                 <StackPanel Spacing="16">
 
                     <TextBlock
-                        Text="{Binding Name}"
+                        Text="{Binding Game.Name}"
                         FontSize="32"
                         FontWeight="SemiBold"
                         TextWrapping="Wrap" />
 
                     <TextBlock
-                        Text="{Binding Description}"
+                        Text="{Binding Game.Description}"
                         TextWrapping="Wrap"
                         FontSize="16" />
 
-                    <TextBlock Text="{Binding Developer}" />
-                    <TextBlock Text="{Binding Platform}" />
-                    <TextBlock Text="{Binding ReleaseDate}" />
-                    <TextBlock Text="{Binding PlayTimeMinutes}" />
+                    <TextBlock Text="{Binding Game.Developer}" />
+                    <TextBlock Text="{Binding Game.Platform}" />
+                    <TextBlock Text="{Binding Game.ReleaseDate}" />
+                    <TextBlock Text="{Binding PlayTimeDisplay}" />
 
                     <TextBlock
-                        Text="{Binding InstalledDirectory}"
+                        Text="{Binding Game.InstallDirectory}"
                         TextWrapping="Wrap" />
 
                 </StackPanel>

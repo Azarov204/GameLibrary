@@ -6,7 +6,7 @@
     xmlns:local="using:GameLibrary.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:GameLibrary.Model"
+    xmlns:model="using:GameLibrary.Models"
     xmlns:controls="using:GameLibrary.Controls"
     mc:Ignorable="d">
 
@@ -52,7 +52,7 @@
         <!-- Game Library Main Window -->
         <Grid x:Name="GameArea" SizeChanged="GameArea_SizeChanged" Grid.Column="1">
             <GridView
-                ItemsSource="{x:Bind ViewModel.Games, Mode=OneWay}"
+                ItemsSource="{Binding Games}"
                 SelectionMode="None"
                 Background="#423D5B"
                 Padding="20,40"

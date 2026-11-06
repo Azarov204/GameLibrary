@@ -1,18 +1,22 @@
-using GameLibrary.Views;
+using GameLibrary.Services;
+using GameLibrary.ViewModels;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using Windows.UI;
 
-namespace GameLibrary;
+namespace GameLibrary.Views;
 
 public sealed partial class MainWindow : Window
 {
+
     public MainWindow()
     {
         InitializeComponent();
-        MainFrame.Navigate(typeof(LibraryPage));
+        var gameService = new FakeGameService();
+        var viewModel = new LibraryViewModel(gameService);
+        MainFrame.Navigate(typeof(LibraryPage), viewModel);
 
         var appWindow = this.AppWindow;
 

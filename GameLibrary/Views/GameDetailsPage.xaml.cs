@@ -1,4 +1,5 @@
-using GameLibrary.Model;
+using GameLibrary.Models;
+using GameLibrary.ViewModels;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -29,7 +30,7 @@ public sealed partial class GameDetailsPage : Page
         
         if (e.Parameter is Game game)
         {
-            DataContext = game;
+            DataContext = new GameDetailsViewModel(game);
         }
     }
 
@@ -51,8 +52,8 @@ public sealed partial class GameDetailsPage : Page
         _heroBitmap = null;
         _blurEffect = null;
 
-        if (DataContext is not Game game ||
-            string.IsNullOrWhiteSpace(game.HeroImageUri))
+        if (DataContext is not GameDetailsViewModel viewModel||
+            string.IsNullOrWhiteSpace(viewModel.HeroImageUri))
         {
             HeroBlurCanvas.Invalidate();
             return;
@@ -60,7 +61,7 @@ public sealed partial class GameDetailsPage : Page
 
         try
         {
-            var imageUri = new Uri(game.HeroImageUri);
+            var imageUri = new Uri(viewModel.HeroImageUri);
 
             _heroBitmap = await CanvasBitmap.LoadAsync(sender, imageUri);
 

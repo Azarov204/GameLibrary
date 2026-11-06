@@ -1,19 +1,32 @@
+
 using GameLibrary.Controls;
-using GameLibrary.Model;
-using GameLibrary.Views;
+using GameLibrary.Models;
+using GameLibrary.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 
 namespace GameLibrary.Views;
 
-/// <summary>
 public sealed partial class LibraryPage : Page
 {
-    public MainViewModel ViewModel { get; } = new();
+    public LibraryViewModel? ViewModel { get; private set; }
+
     public LibraryPage()
     {
         InitializeComponent();
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+
+        if (e.Parameter is LibraryViewModel viewModel)
+        {
+            ViewModel = viewModel;
+            DataContext = ViewModel;
+        }
     }
 
     private void GameCard_PlayRequested(object sender, EventArgs e)
@@ -39,8 +52,13 @@ public sealed partial class LibraryPage : Page
         double minimumCardWidth = 180;
         double spacing = 16;
 
-        int columns = Math.Max(1, (int)((availableWidth + spacing) / (minimumCardWidth + spacing)));
-        double cardWidth = (availableWidth - (columns * spacing)) / columns;
+        int columns = Math.Max(1,
+            (int)((availableWidth + spacing) /
+            (minimumCardWidth + spacing)));
+
+        double cardWidth =
+            (availableWidth - (columns * spacing)) / columns;
+
         // GameCardWidth = cardWidth;
     }
 }
