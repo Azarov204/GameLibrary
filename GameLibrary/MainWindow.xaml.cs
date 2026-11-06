@@ -1,4 +1,4 @@
-using GameLibrary.Pages;
+using GameLibrary.Views;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;

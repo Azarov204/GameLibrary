@@ -1,11 +1,11 @@
 using GameLibrary.Controls;
 using GameLibrary.Model;
-using GameLibrary.Pages;
+using GameLibrary.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 
-namespace GameLibrary.Pages;
+namespace GameLibrary.Views;
 
 /// <summary>
 public sealed partial class LibraryPage : Page

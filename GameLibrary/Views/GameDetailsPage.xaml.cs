@@ -10,7 +10,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Threading.Tasks;
 
-namespace GameLibrary.Pages;
+namespace GameLibrary.Views;
 
 /// summary of page
 public sealed partial class GameDetailsPage : Page
