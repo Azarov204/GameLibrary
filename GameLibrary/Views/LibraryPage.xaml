@@ -46,6 +46,13 @@
                     <CheckBox Content="Rockstar" />
                     <CheckBox Content="Unknown" />
                 </StackPanel>
+
+                <Button
+                    Content="Add Game"
+                    Click="AddGameButton_Click"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom" />
             </StackPanel>
         </ScrollViewer>
 
