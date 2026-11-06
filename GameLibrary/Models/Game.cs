@@ -15,8 +15,8 @@ public class Game
     public string HeroImageUri => $"ms-appx:///Assets/GameHeros/{Hero}";
     public string Description { get; set; } = string.Empty;
     public string Developer { get; set; } = string.Empty;
-    public DateTime ReleaseDate { get; set; }
+    public DateTime? ReleaseDate { get; set; }
     public DateTime? LastPlayed { get; set; }
     public int PlayTimeMinutes { get; set; }
-    public bool IsFavorite { get; set; }
+    public bool? IsFavorite { get; set; }
 }
