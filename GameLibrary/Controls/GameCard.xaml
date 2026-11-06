@@ -52,16 +52,28 @@
             Padding="0"
             BorderThickness="0"
             CornerRadius="12"
-            Background="Transparent"
+            Background="Gray"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch">
-            
-            <Image
-                Source="{x:Bind GameItem.ImageUri, Mode=OneWay}"
-                Stretch="UniformToFill" />
-            
+            <Grid>
+                <!-- Fallback game name -->
+                <TextBlock
+                    Text="{x:Bind GameItem.Name}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Margin="12"/>
+                <!-- Game cover art -->
+                <Image
+                    Source="{x:Bind GameItem.ImageUri, Mode=OneWay}"
+                    Stretch="UniformToFill"/>
+            </Grid>
         </Button>
-        
+
         <!-- Dark overlay -->
         <Border
             x:Name="DarkOverlay"
